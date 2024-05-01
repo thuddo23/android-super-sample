@@ -1,0 +1,10 @@
+flask~=3.0.2
+flask-smorest
+python-dotenv
+sqlalchemy
+flask-sqlalchemy
+marshmallow
+flask-jwt-extended
+
+# hash our password
+passlib
