@@ -20,7 +20,7 @@ class Token(MethodView):
 
     @blp.arguments(TokenSchema)
     def post(self, token):
-        if token["token_type"] and token["token_id"] and validate_token(token["token_type"], token["token_id"]):
+        if "token_type" in token and "token_id" in token and validate_token(token["token_type"], token["token_id"]):
             session["name"] = "thuandohusk65"
             return redirect("/authorized")
         return redirect("/unauthorized")
