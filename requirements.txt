@@ -8,3 +8,6 @@ flask-jwt-extended
 
 # hash our password
 passlib
+
+# db
+pymongo[srv]

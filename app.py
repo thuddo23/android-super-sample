@@ -12,8 +12,9 @@ from flask_jwt_extended import JWTManager
 from resources.testing import blp as TestingBlueprint
 from resources.user import blp as UserBlueprint
 from resources.authorization import blp as AuthorizationBlueprint
-# from db import db
-#
+from pymongo import MongoClient
+from db import db
+
 # from blocklist import BLOCKLIST
 
 def create_app():
@@ -32,6 +33,12 @@ def create_app():
     api = Api(app)
     #
     app.secret_key = "286306066042579574515943144399100054894"
+
+    # setup mongo db
+    app.db = db
+
+
+
     # app.config["JWT_SECRET_KEY"] = "286306066042579574515943144399100054894"
     # jwt = JWTManager(app)
     #
@@ -76,6 +83,7 @@ def create_app():
     api.register_blueprint(UserBlueprint)
     api.register_blueprint(AuthorizationBlueprint)
 
+    print([e for e in app.db.entries.find({})])
     return app
 
 app = create_app()
