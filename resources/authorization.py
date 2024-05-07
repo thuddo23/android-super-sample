@@ -21,6 +21,10 @@ class Token(MethodView):
     def post(self, token):
         if "token_type" in token and "token_id" in token and validate_token(token["token_type"], token["token_id"]):
             session["name"] = "thuandohusk65"
+            db.user.insert_one({
+                "name": session["name"],
+                "age": 22
+            })
             return redirect("/authorized")
         return redirect("/unauthorized")
 

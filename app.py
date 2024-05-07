@@ -83,7 +83,6 @@ def create_app():
     api.register_blueprint(UserBlueprint)
     api.register_blueprint(AuthorizationBlueprint)
 
-    print([e for e in app.db.entries.find({})])
     return app
 
 app = create_app()
