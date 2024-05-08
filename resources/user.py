@@ -23,6 +23,19 @@ class GetUser(MethodView):
             return jsonify({'message': 'User not found'}), 404
 
 
+@blp.route("/save_user")
+class SaveUser(MethodView):
+
+    @blp.arguments(UserSchema, description="save user to db!")
+    def post(self, user_data):
+        result = db.user.insert_one(user_data)
+
+        if result.acknowledged:
+            return {"message": "save user successfully"}
+        else:
+            return {"message": "save user failed!"}
+
+
 @blp.route("/update_user")
 class UpdateUser(MethodView):
 
@@ -30,11 +43,16 @@ class UpdateUser(MethodView):
         return {"message": "Hello World!"}
 
 
-@blp.route("/delete_user")
+@blp.route("/delete_user/<string:user_id>")
 class DeleteUser(MethodView):
 
-    def delete(self):
-        return {"message": "Hello World!"}
+    def delete(self, user_id):
+        result = db.user.delete_one({"_id": ObjectId(user_id)})
+
+        if result.acknowledged:
+            return {"message": "delete user successfully"}
+        else:
+            return {"message": "delete user failed!"}
 
 
 @blp.route("/sign_out")
