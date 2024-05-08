@@ -36,11 +36,19 @@ class SaveUser(MethodView):
             return {"message": "save user failed!"}
 
 
-@blp.route("/update_user")
+@blp.route("/update_user/<string:user_id>")
 class UpdateUser(MethodView):
 
-    def put(self):
-        return {"message": "Hello World!"}
+    @blp.arguments(UserSchema)
+    def put(self, user_data, user_id):
+        condition = {"_id": ObjectId(user_id)}
+        new_values = {"$set": user_data}
+        result = db.user.update_one(condition, new_values)
+
+        if result.acknowledged:
+            return {"message": "update user successfully"}
+        else:
+            return {"message": "update user failed!"}
 
 
 @blp.route("/delete_user/<string:user_id>")
